@@ -47,7 +47,7 @@
 
 from django import forms
 from django.utils.safestring import mark_safe
-from django.utils import simplejson
+import json
 
 from recaptcha_works import settings
 
@@ -92,7 +92,7 @@ var RecaptchaOptions = {
     def render(self, name, value, attrs=None):
         args = dict(public_key=self.public_key, proto=self.proto, options='')
         if self.options:
-            args['options'] = self.RECAPTCHA_OPTIONS_SCRIPT % simplejson.dumps(
+            args['options'] = self.RECAPTCHA_OPTIONS_SCRIPT % json.dumps(
                 self.options, indent=4).strip('{}')
         return mark_safe(settings.RECAPTCHA_HTML % args)
 
